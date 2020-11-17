@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "751035707973",
+    "firebase_url": "https://chatroom-afcaa.firebaseio.com",
+    "project_id": "chatroom-afcaa",
+    "storage_bucket": "chatroom-afcaa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:751035707973:android:82fe79c483894d5fd3692c",
+        "android_client_info": {
+          "package_name": "com.example.chatroom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "751035707973-5drdprj872ol1507r1k1eheq328i8cg9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBRipRc3tWzvYyJqkh0J7rhRg4J3ihc0hc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "751035707973-5drdprj872ol1507r1k1eheq328i8cg9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
