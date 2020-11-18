@@ -15,13 +15,13 @@ class ChatScreen extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: () {
-          Firebase.initializeApp();
-          Firestore.instance
+        onPressed: () async {
+          await Firebase.initializeApp();
+          FirebaseFirestore.instance
               .collection('chats/sEJazA42bMU3oyLpO3Rs/messages')
               .snapshots()
               .listen((data) {
-            data.documents.forEach((document) {
+            data.docs.forEach((document) {
               print(document['text']);
             });
           });
