@@ -6,6 +6,24 @@ class AuthForm extends StatefulWidget {
 }
 
 class _AuthFormState extends State<AuthForm> {
+  final _formKey = GlobalKey<FormState>();
+  var _isLogin = true;
+  String _userEmail = '';
+  String _userName = '';
+  String _userPassword = '';
+
+  void _trySubmit() {
+    final isValid = _formKey.currentState.validate(); //trigger validators
+    FocusScope.of(context)
+        .unfocus(); //close any existing focus and hence soft keyboard
+
+    if (isValid) {
+      _formKey.currentState.save(); //trigger onSaved property of each field
+
+      //user the input values to send auth request
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -15,38 +33,76 @@ class _AuthFormState extends State<AuthForm> {
               child: Padding(
                 padding: EdgeInsets.all(16),
                 child: Form(
+                  key: _formKey,
                   child: Column(
                     mainAxisSize:
                         MainAxisSize.min, //children to take min size the need
                     children: [
                       TextFormField(
+                        key: ValueKey('email'),
+                        validator: (value) {
+                          if (value.isEmpty || !value.contains('@')) {
+                            return 'Please enter a valid email address';
+                          }
+                          return null;
+                        },
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           labelText: 'Email Address',
                         ),
+                        onSaved: (value) {
+                          _userEmail = value;
+                        },
                       ),
-                      TextFormField(
-                        decoration: InputDecoration(
-                          labelText: 'Username',
+                      if (!_isLogin)
+                        TextFormField(
+                          key: ValueKey('username'),
+                          validator: (value) {
+                            if (value.isEmpty || value.length < 4) {
+                              return 'Please enter at least 4 characters';
+                            }
+                            return null;
+                          },
+                          decoration: InputDecoration(
+                            labelText: 'Username',
+                          ),
+                          onSaved: (value) {
+                            _userName = value;
+                          },
                         ),
-                      ),
                       TextFormField(
+                        key: ValueKey('password'),
+                        validator: (value) {
+                          if (value.isEmpty || value.length < 7) {
+                            return 'Password must be at least 7 character long';
+                          }
+                          return null;
+                        },
                         obscureText: true, //hide text for password
                         decoration: InputDecoration(
                           labelText: 'Password',
                         ),
+                        onSaved: (value) {
+                          _userEmail = value;
+                        },
                       ),
                       SizedBox(
                         height: 12,
                       ),
                       RaisedButton(
-                        child: Text('Login'),
-                        onPressed: () {},
+                        child: Text(_isLogin ? 'Login' : 'Sign up'),
+                        onPressed: _trySubmit,
                       ),
                       FlatButton(
                           textColor: Theme.of(context).primaryColor,
-                          onPressed: () {},
-                          child: Text('Create new account'))
+                          onPressed: () {
+                            setState(() {
+                              _isLogin = !_isLogin;
+                            });
+                          },
+                          child: Text(_isLogin
+                              ? 'Create new account'
+                              : 'I already have an account'))
                     ],
                   ),
                 ),
