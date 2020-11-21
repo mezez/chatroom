@@ -89,7 +89,7 @@ class _AuthFormState extends State<AuthForm> {
                           labelText: 'Password',
                         ),
                         onSaved: (value) {
-                          _userEmail = value;
+                          _userPassword = value;
                         },
                       ),
                       SizedBox(

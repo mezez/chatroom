@@ -16,7 +16,6 @@ class _AuthScreenState extends State<AuthScreen> {
   void _submitAuthForm(String email, String password, String username,
       bool isLogin, BuildContext ctx) async {
     UserCredential userCredential;
-
     try {
       setState(() {
         _isLoading = true;
