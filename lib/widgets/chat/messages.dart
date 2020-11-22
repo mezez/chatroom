@@ -22,7 +22,7 @@ class Messages extends StatelessWidget {
           // reverse: true, //order messages, bottom top
           itemBuilder: (ctx, index) => MessageBubble(
             documents[index]['text'],
-            documents[index]['userId'],
+            documents[index]['username'],
             documents[index]['userId'] == user.uid,
             key: ValueKey(documents[index].id),
           ),

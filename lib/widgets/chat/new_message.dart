@@ -15,10 +15,15 @@ class _NewMessageState extends State<NewMessage> {
     FocusScope.of(context).unfocus(); //remove focus and close keyboard
     //await not really necessary here as this is a group chat app and we arent using the feedback for anything
     final user = FirebaseAuth.instance.currentUser;
+    final userData = await FirebaseFirestore.instance
+        .collection('users')
+        .doc(user.uid)
+        .get();
     await FirebaseFirestore.instance.collection('chat').add({
       'text': _enteredMessage,
       'createdAt': Timestamp.now(),
       'userId': user.uid,
+      'username': userData['username'],
     });
     _controller.clear();
   }
