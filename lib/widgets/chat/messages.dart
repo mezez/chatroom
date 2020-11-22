@@ -5,7 +5,10 @@ class Messages extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: FirebaseFirestore.instance.collection('chat').snapshots(),
+      stream: FirebaseFirestore.instance
+          .collection('chat')
+          .orderBy('createdAt', descending: false)
+          .snapshots(),
       builder: (ctx, chatSnapshot) {
         QuerySnapshot values = chatSnapshot.data;
         final documents = values.docs;
@@ -14,6 +17,7 @@ class Messages extends StatelessWidget {
         }
 
         return ListView.builder(
+          // reverse: true, //order messages, bottom top
           itemBuilder: (ctx, index) => Text(documents[index]['text']),
           itemCount: documents.length,
         );

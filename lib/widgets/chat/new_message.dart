@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class NewMessage extends StatefulWidget {
@@ -6,7 +7,19 @@ class NewMessage extends StatefulWidget {
 }
 
 class _NewMessageState extends State<NewMessage> {
+  final _controller = new TextEditingController();
   var _enteredMessage = '';
+
+  void _sendMessage() async {
+    FocusScope.of(context).unfocus(); //remove focus and close keyboard
+    //await not really necessary here as this is a group chat app and we arent using the feedback for anything
+    await FirebaseFirestore.instance.collection('chat').add({
+      'text': _enteredMessage,
+      'createdAt': Timestamp.now(),
+    });
+    _controller.clear();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,6 +30,7 @@ class _NewMessageState extends State<NewMessage> {
           //expanded sorts out child widget taking up much space ish vs its parent; textfield vs row in this case
           Expanded(
             child: TextField(
+              controller: _controller,
               decoration: InputDecoration(labelText: 'Send a message'),
               onChanged: (value) {
                 setState(() {
@@ -27,7 +41,7 @@ class _NewMessageState extends State<NewMessage> {
           ),
           IconButton(
             icon: Icon(Icons.send),
-            onPressed: _enteredMessage.trim().isEmpty ? null : () {},
+            onPressed: _enteredMessage.trim().isEmpty ? null : _sendMessage,
             color: Theme.of(context).primaryColor,
           )
         ],
