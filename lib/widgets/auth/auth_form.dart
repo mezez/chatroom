@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class AuthForm extends StatefulWidget {
   final void Function(String email, String password, String username,
-      bool isLogin, BuildContext ctx) submitFn;
+      File userImageFile, bool isLogin, BuildContext ctx) submitFn;
   final bool isLoading;
 
   AuthForm(this.submitFn, this.isLoading);
@@ -39,7 +39,7 @@ class _AuthFormState extends State<AuthForm> {
     if (isValid) {
       _formKey.currentState.save(); //trigger onSaved property of each field
       widget.submitFn(_userEmail.trim(), _userPassword.trim(), _userName.trim(),
-          _isLogin, context);
+          _userImageFile, _isLogin, context);
       //user the input values to send auth request
     }
   }
